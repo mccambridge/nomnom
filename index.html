@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href='http://fonts.googleapis.com/css?family=Pathway+Gothic+One' rel='stylesheet' type='text/css'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
+  <script src='http://api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.js'></script>
+  <link href='http://api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.css' rel='stylesheet' />
+  <!--[if lte IE 8]>
+    <link href='http://api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.ie.css' rel='stylesheet' >
+  <![endif]-->
+  <style>
+    body { margin:0; padding:0; font-family: 'Pathway Gothic One', sans-serif; }
+    header {
+      position: absolute;
+      padding: 0 2.5%;
+      top: 0;
+      width: 95%;
+      background: #000;
+      background: rgba(0,0,0,0.7);
+      color: #fff;
+      text-align: center;
+      z-index: 1000;
+      font-size: 2em;
+      margin: auto;
+      bottom: 0;
+      height: 42px;
+    }
+    header span { color: #c99; }
+    #map { position:absolute; top:0; bottom:0; width:100%; }
+  </style>
+</head>
+<body>
+<header>grub globe <span>/ charleston</span></header>
+<div id='map'></div>
+<script type='text/javascript'>
+var map = L.mapbox.map('map', 'mccambridge.map-xne0uzqo').setView([32.792, -79.914], 11);
+
+var features = [
+    {
+        type: 'Feature',
+        geometry: {
+            type: 'Point',
+            coordinates: [-79.97694969177246, 32.881344148458865]
+        },
+        properties: {
+            'marker-color': '#f63a39',
+            'marker-symbol': 'restaurant',
+            title: 'EVO (Extra Virgin Oven)',
+            description: 'The best pizza in town. All local and regional ingredients. Killer salads. Amazing appetizers.  I like going with a friend and splitting a pizza and a salad or maybe a snack plate. The ingredients change almost daily so you\'re going to have something a little different every time you eat at EVO. Great beer selection. Can\'t go wrong! <a href="http://evopizza.com/">http://evopizza.com/</a>'
+        }
+    }
+];
+
+L.mapbox.markerLayer({
+    type: 'FeatureCollection',
+    features: features
+}).addTo(map);
+</script>
+</body>
+</html>
