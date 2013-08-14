@@ -9,7 +9,7 @@
   
   <link href="http://fonts.googleapis.com/css?family=Pathway+Gothic+One" rel="stylesheet" type="text/css">
   
-  <title>50 Unique and Authentic Charleston Restaurants & Bars | Grub Globe</title>
+  <title>50 Unique and Authentic Charleston Restaurants, Bars & Coffee Shops | Grub Globe</title>
   
   <meta name="description" content="50 places to eat and drink in Charleston that stand out from the crowd.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -28,19 +28,14 @@
 <body>
   <header>grub globe <span>/ charleston</span></header>
   <div id="map"></div>
+
+  {{ content }}
+
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
   <script>window.jQuery || document.write('<script src="/js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
 
   <script src="/js/plugins.js"></script>
   <script src="/js/main.js"></script>
-  <script src="/js/charleston.js"></script>
-  <script>
-    var map = L.mapbox.map('map', 'mccambridge.map-xne0uzqo').setView([32.792, -79.914], 11);
-    L.mapbox.markerLayer({
-        type: 'FeatureCollection',
-        features: locations
-    }).addTo(map);
-  </script>
   <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
