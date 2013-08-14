@@ -1,60 +1,133 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <link href='http://fonts.googleapis.com/css?family=Pathway+Gothic+One' rel='stylesheet' type='text/css'>
-  <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
-  <script src='http://api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.js'></script>
-  <link href='http://api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.css' rel='stylesheet' />
-  <!--[if lte IE 8]>
-    <link href='http://api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.ie.css' rel='stylesheet' >
-  <![endif]-->
-  <style>
-    body { margin:0; padding:0; font-family: 'Pathway Gothic One', sans-serif; }
-    header {
-      position: absolute;
-      padding: 0 2.5%;
-      top: 0;
-      width: 95%;
-      background: #000;
-      background: rgba(0,0,0,0.7);
-      color: #fff;
-      text-align: center;
-      z-index: 1000;
-      font-size: 2em;
-      margin: auto;
-      bottom: 0;
-      height: 42px;
-    }
-    header span { color: #c99; }
-    #map { position:absolute; top:0; bottom:0; width:100%; }
-  </style>
-</head>
-<body>
-<header>grub globe <span>/ charleston</span></header>
-<div id='map'></div>
-<script type='text/javascript'>
-var map = L.mapbox.map('map', 'mccambridge.map-xne0uzqo').setView([32.792, -79.914], 11);
-
-var features = [
-    {
-        type: 'Feature',
-        geometry: {
-            type: 'Point',
-            coordinates: [-79.97694969177246, 32.881344148458865]
-        },
-        properties: {
-            'marker-color': '#f63a39',
-            'marker-symbol': 'restaurant',
-            title: 'EVO (Extra Virgin Oven)',
-            description: 'The best pizza in town. All local and regional ingredients. Killer salads. Amazing appetizers.  I like going with a friend and splitting a pizza and a salad or maybe a snack plate. The ingredients change almost daily so you\'re going to have something a little different every time you eat at EVO. Great beer selection. Can\'t go wrong! <a href="http://evopizza.com/">http://evopizza.com/</a>'
-        }
-    }
-];
-
-L.mapbox.markerLayer({
-    type: 'FeatureCollection',
-    features: features
-}).addTo(map);
-</script>
-</body>
-</html>
+---
+layout: default
+---
+<!-- <ul id="locations">
+  <li data-lat="32.88134" data-lon="-79.97694" class="restaurant">
+    <h2>EVO (Extra Virgin Oven)</h2>
+    <p>The best pizza in town. Local and regional ingredients. Killer salads. Amazing appetizers.  I like going with a friend and splitting a pizza and a salad or maybe a snack plate. The ingredients change almost daily so you\'re going to have something a little different every time you eat at EVO. Great beer selection. Can\'t go wrong! <a href="http://evopizza.com/">http://evopizza.com/</a></p>
+  </li>
+  <li data-lat="32.806821" data-lon="-79.942356" class="beer">
+    <h2>Royal American</h2>
+    <p>Description</p>
+  </li>
+  <li data-lat="32.812444" data-lon="-79.950222" class="restaurant">
+    <h2>Santi\'s</h2>
+    <p>Description</p>
+  </li>
+  <li data-lat="32.781872" data-lon="-79.985828" class="beer">
+    <h2>Gene\'s Haufbrau</h2>
+    <p>Description</p>
+  </li>
+  <li data-lat="32.793954" data-lon="-79.94086" class="restaurant">
+    <h2>The Alley</h2>
+    <p>Description</p>
+  </li>
+  <li data-lat="32.762431" data-lon="-79.836713" class="restaurant">
+    <h2>Home Team BBQ</h2>
+    <p>Description</p>
+  </li>
+  <li data-lat="32.791559" data-lon="-79.940277" class="restaurant">
+    <h2>HōM</h2>
+    <p>Description</p>
+  </li>
+  <li data-lat="32.782392" data-lon="-79.931672" class="restaurant">
+    <h2>FIG</h2>
+    <p>Description</p>
+  </li>
+  <li data-lat="32.778008" data-lon="-79.932128" class="restaurant">
+    <h2>Husk</h2>
+    <p>Description</p>
+  </li>
+  <li data-lat="32.7626842" data-lon="-79.836999" class="restaurant">
+    <h2>Poe\'s Tavern</h2>
+    <p>Description</p>
+  </li>
+  <li data-lat="32.811471" data-lon="-79.949246" class="restaurant">
+    <h2>Tattooed Moose</h2>
+    <p>Description</p>
+  </li>
+  <li data-lat="32.791512" data-lon="-79.944429" class="cafe">
+    <h2>WildFlour Pastry</h2>
+    <p>Description</p>
+  </li>
+  <li data-lat="32.779846" data-lon="-79.937651" class="cafe">
+    <h2>Black Tap Coffee</h2>
+    <p>Description</p>
+  </li>
+  <li data-lat="32.778267" data-lon="-79.927106" class="restaurant">
+    <h2>McCrady\'s</h2>
+    <p>Description</p>
+  </li>
+  <li data-lat="32.789997" data-lon="-79.939225" class="bar">
+    <h2>The Belmont</h2>
+    <p>Description</p>
+  </li>
+  <li data-lat="32.787197" data-lon="-79.9377" class="cafe">
+    <h2>Kudu</h2>
+    <p>Description</p>
+  </li>
+  <li data-lat="32.810659" data-lon="-79.878589" class="cafe">
+    <h2>Collective Coffee Co.</h2>
+    <p>Description</p>
+  </li>
+  <li data-lat="32.853622" data-lon="-80.001992" class="beer">
+    <h2>Holy City Brewing</h2>
+    <p>Description</p>
+  </li>
+  <li data-lat="32.734711" data-lon="-80.057182" class="restaurant">
+    <h2>Fat Hen</h2>
+    <p>Description</p>
+  </li>
+  <li data-lat="32.656771" data-lon="-79.941448" class="beer">
+    <h2>Folly Beach Brew Pub</h2>
+    <p>Description</p>
+  </li>
+  <li data-lat="32.926531" data-lon="-79.71467" class="restaurant">
+    <h2>Seewee Restaurant</h2>
+    <p>Description</p>
+  </li>
+  <li data-lat="32.782204" data-lon="-79.927796" class="restaurant">
+    <h2>Green Door</h2>
+    <p>Description</p>
+  </li>
+  <li data-lat="32.792178" data-lon="-79.882827" class="restaurant">
+    <h2>Vickery\'s</h2>
+    <p>Description</p>
+  </li>
+  <li data-lat="32.791891" data-lon="-79.881261" class="bar">
+    <h2>Red\'s Ice House</h2>
+    <p>Description</p>
+  </li>
+  <li data-lat="32.787684" data-lon="-79.938566" class="restaurant">
+    <h2>Pane E Vino</h2>
+    <p>Description</p>
+  </li>
+  <li data-lat="32.802194" data-lon="-79.952969" class="beer">
+    <h2>Moe\'s Crosstown Tavern</h2>
+    <p>Description</p>
+  </li>
+  <li data-lat="32.796536" data-lon="-79.944578" class="beer">
+    <h2>Recovery Room</h2>
+    <p>Description</p>
+  </li>
+  <li data-lat="32.783867" data-lon="-79.998108" class="restaurant">
+    <h2>The Glass Onion</h2>
+    <p>Description</p>
+  </li>
+  <li data-lat="32.788838" data-lon="-79.946816" class="restaurant">
+    <h2>Hominy Grill</h2>
+    <p>Description</p>
+  </li>
+  <li data-lat="32.873542" data-lon="-79.9722" class="beer">
+    <h2>Coast Brewing</h2>
+    <p>Description</p>
+  </li>
+  <li data-lat="32.787992" data-lon="-79.92878" class="restaurant">
+    <h2>Ted\'s Butcherblock</h2>
+    <p>Description</p>
+  </li>
+  <li data-lat="32.79624" data-lon="-79.943859" class="restaurant">
+    <h2>Butcher &amp; Bee</h2>
+    <p>Description</p>
+  </li>
+</ul> -->
