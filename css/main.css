@@ -53,11 +53,14 @@ textarea {
    ========================================================================== */
 
 
-body { margin:0; padding:0; font-family: 'Pathway Gothic One', sans-serif; }
+body { margin:0; padding:0; }
 header {
+  font-family: 'Pathway Gothic One', sans-serif; 
   position: absolute;
   padding: 0 2.5%;
   top: 0;
+  left: 0;
+  bottom: 0;
   width: 95%;
   background: #000;
   background: rgba(0,0,0,0.7);
@@ -66,12 +69,40 @@ header {
   z-index: 1000;
   font-size: 1.65em;
   margin: auto;
-  bottom: 0;
   height: 39px;
 }
-header span { color: #c99; }
+header span { color: #c99; text-transform: lowercase; }
+header a {
+  color: #c99;
+  text-decoration: none;
+  outline: none !important;
+}
+header a:hover, header a:active {
+  color: #f88;
+}
 #map { position:absolute; top:0; bottom:0; width:100%; }
 
+#pane-container {
+  display: none;
+  width: 100%;
+  height: 50%;
+  position: absolute;
+  top: 0;
+  z-index: 999;
+  background: #fff;
+  background: rgba(255,255,255,0.9);
+  overflow: auto;
+}
+#pane-container.open {
+  display: block;
+}
+#pane-container.bottom {
+  top: auto;
+  bottom: 0;
+}
+#pane {
+  padding: 2em 5%;
+}
 
 
 
