@@ -121,7 +121,7 @@ header a:hover, header a:active {
   top: 0;
   z-index: 999;
   background: url('/img/bg-wood.jpg');
-  overflow: auto;
+  overflow: hidden;
 }
 #pane-container.open {
   display: block;
@@ -131,26 +131,47 @@ header a:hover, header a:active {
   bottom: 0;
 }
 #pane {
-  padding: 1em 5%;
+  padding: 0;
+  position: relative;
 }
 #pane-main {
-  float: left;
-  width: 65%;
+  width: 94%;
+}
+#swiper-prev, #swiper-next {
+  width: 3%;
+  height: 100%;
+  background: #fff url('/img/arrow-left.png') no-repeat center center;
+  background: rgba(255,255,255,0.7) url('/img/arrow-left.png') no-repeat center center;
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  text-align: center;
+  background: ;
+}
+#swiper-next {
+  left: auto;
+  right: 0;
+  background: #fff url('/img/arrow-right.png') no-repeat center center;
+  background: rgba(255,255,255,0.7) url('/img/arrow-right.png') no-repeat center center;
 }
 #pane-main h2 strong {
   text-transform: capitalize;
 }
 #pane-main ul {
   list-style: none;
-  margin: 1em 0;
+  margin: 0;
   padding: 0;
 }
 #pane-main ul li {
-  margin: 1em 0;
+  margin: 0;
+  display: inline-block;
+  width: 320px;
+  height: 300px;
+  vertical-align: top;
 }
-#pane-sidebar {
-  float: right;
-  width: 30%;
+#pane-main ul li h2, #pane-main ul li p {
+  margin: 0.83em 3%;
 }
 
 #listing-content {

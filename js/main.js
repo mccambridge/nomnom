@@ -9,6 +9,26 @@ var Grub = {
     this.mapEvents();
   },
 
+  swiper: function() {
+    var mySwiper = new Swiper('.swiper-container' ,{
+      slidesPerView: 3,
+      loop: true
+    });
+
+    // add nav buttons to #pane
+    var paneHeight = $('#pane-container').height();
+    var navArrows = '<a href="#" id="swiper-prev" class="ir" style="height: ' + paneHeight + 'px">previous</a><a href="#" id="swiper-next" class="ir" style="height: ' + paneHeight + 'px"><span>next</span></a>';
+    $('#pane').append(navArrows);
+    $('#swiper-prev').on('click', function(e) {
+      e.preventDefault();
+      mySwiper.swipePrev();
+    });
+    $('#swiper-next').on('click', function(e) {
+      e.preventDefault();
+      mySwiper.swipeNext();
+    });
+  },
+
   mapEvents: function() {
     if ($('body').attr('id') !== 'map-template') return false;
     var that = this;
@@ -17,21 +37,23 @@ var Grub = {
       var $this = $(this),
           where = ($('#pane-container').hasClass('top')) ? 'top' : 'bottom';
           theId = $this.attr('id'),
-          markup = '<div id="pane-main">';
-          markup += '<ul id="city-locations">';
+          markup = '<div id="pane-main" class="swiper-container">';
+          markup += '<ul id="city-locations" class="swiper-wrapper">';
           markup += $('#locations').html();
           markup += '</ul></div>';
-          markup += '<div id="pane-sidebar"></div>';
-      ($('#pane-container').data('opened-by') === theId) ? that.closePane() : that.openPane(where, theId, markup);
+      ($('#pane-container').data('opened-by') === theId) ? that.closePane() : that.openPane(where, theId, markup, '#city-locations');
     });
   },
 
-  openPane: function(position, openedBy, markup) {
+  openPane: function(position, openedBy, markup, swiper) {
     var $paneContainer = $('#pane-container'),
+        swiperId = swiper || false;
         $pane = $paneContainer.children('#pane');
-    console.log(openedBy);
     $paneContainer.addClass('open ' + position).data('opened-by', openedBy).css({'height': ($(window).height() / 2 - ($('header').height() / 2))});
     $pane.html(markup);
+    if (swiperId) {
+      this.swiper();
+    }
   },
 
   closePane: function() {
@@ -66,16 +88,16 @@ var Grub = {
         var location,
             markerId = 'marker-' + e.layer._leaflet_id;
 
-        e.layer.unbindPopup();
-        
-        if ($('#pane-container').data('opened-by') === markerId) {
-          that.closePane();
-        } else {
-          // get cursor location relative to page height and open in proper position
-          var pageY = e.originalEvent.clientY;  
-          location = (pageY > ($(window).height() / 2)) ? 'top' : 'bottom';
-          that.openPane(location, markerId, markerId);
-        }
+        //e.layer.unbindPopup();
+        //
+        //if ($('#pane-container').data('opened-by') === markerId) {
+        //  that.closePane();
+        //} else {
+        //  // get cursor location relative to page height and open in proper position
+        //  var pageY = e.originalEvent.clientY;  
+        //  location = (pageY > ($(window).height() / 2)) ? 'top' : 'bottom';
+        //  that.openPane(location, markerId, markerId);
+        //}
       });
     }
   },
