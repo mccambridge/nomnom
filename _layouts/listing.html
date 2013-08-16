@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  
+  <link href="http://fonts.googleapis.com/css?family=Pathway+Gothic+One|Source+Sans+Pro" rel="stylesheet" type="text/css">
+  
+  <title>{{ page.title }} | Grub Globe</title>
+  
+  <meta name="description" content="{{ page.title }} is one place worth checking out in {{ page.city }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  
+  <script src="http://api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.js"></script>
+  <link href="http://api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.css" rel="stylesheet" />
+  <!--[if lte IE 8]>
+    <link href="http://api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.ie.css" rel="stylesheet" >
+  <![endif]-->
+
+  <link rel="stylesheet" href="/css/normalize.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+
+  <script src="/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+</head>
+<body id="listing-template" data-lat="{{ page.lat }}" data-lon="{{ page.lon }}" data-zoom="{{ page.zoom }}">
+  <img id="header-img" src="/img/headers/{{ page.uri }}-{{ page.city }}.jpg" alt="{{ page.title }}">
+  <header>grub globe <span>/ <a id="header-city" href="/{{ page.city }}">{{ page.city }}</a> <span> / {{ page.title }}</span></span></header>
+  <div id="listing-content" class="clearfix">
+    <div id="listing-sidebar">
+      <div id="map"></div>
+    </div>
+    <div id="listing-main">
+      {{ content }}
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+          /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+          var disqus_shortname = 'grubglobe'; // required: replace example with your forum shortname
+
+          /* * * DON'T EDIT BELOW THIS LINE * * */
+          (function() {
+              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+              dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+          })();
+      </script>
+    </div>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    
+  </div>
+
+  <ul id="locations">
+    <li data-lat="{{ page.lat }}" data-lon="{{ page.lon }}" data-type="{{ page.type }}">
+      <h2><a href="/{{ page.city }}/{{ page.uri }}/">{{ page.title }}</a></h2>
+    </li>
+  </ul>
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="/js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
+
+  <script src="/js/plugins.js"></script>
+  <script src="/js/main.js"></script>
+  <script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-43184943-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+  </script>
+</body>
+</html>

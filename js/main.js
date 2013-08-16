@@ -1,17 +1,28 @@
 var Grub = {
   init: function() {
-    this.createMap();
+    var bodyId = $('body').attr('id');
+    if (bodyId === 'map-template' || bodyId === 'listing-template') this.createMap(); // only on map pages
     this.events();
   },
 
   events: function() {
+    this.mapEvents();
+  },
+
+  mapEvents: function() {
+    if ($('body').attr('id') !== 'map-template') return false;
     var that = this;
     $('#header-city').on('click', function(e) {
       e.preventDefault();
       var $this = $(this),
+          where = ($('#pane-container').hasClass('top')) ? 'top' : 'bottom';
           theId = $this.attr('id'),
-          markup = $this.text();
-      ($('#pane-container').data('opened-by') === theId) ? that.closePane() : that.openPane('bottom', theId, markup);
+          markup = '<div id="pane-main">';
+          markup += '<ul id="city-locations">';
+          markup += $('#locations').html();
+          markup += '</ul></div>';
+          markup += '<div id="pane-sidebar"></div>';
+      ($('#pane-container').data('opened-by') === theId) ? that.closePane() : that.openPane(where, theId, markup);
     });
   },
 
@@ -19,7 +30,7 @@ var Grub = {
     var $paneContainer = $('#pane-container'),
         $pane = $paneContainer.children('#pane');
     console.log(openedBy);
-    $paneContainer.addClass('open ' + position).data('opened-by', openedBy);
+    $paneContainer.addClass('open ' + position).data('opened-by', openedBy).css({'height': ($(window).height() / 2 - ($('header').height() / 2))});
     $pane.html(markup);
   },
 
@@ -32,26 +43,39 @@ var Grub = {
 
   createMap: function() {
     var locations = this.locationsFromHTML(),
+        latlng = [],
+        $body = $('body'),
+        zoom = $body.data('zoom') || 11,
         that = this;
     if (locations) {
-      var map = L.mapbox.map('map', 'mccambridge.map-xne0uzqo').setView([32.792, -79.914], 11);
+      latlng.push($body.data('lat'));
+      latlng.push($body.data('lon'));
+      var map = L.mapbox.map('map', 'mccambridge.map-xne0uzqo').setView(latlng, zoom);
       map.markerLayer.setGeoJSON({
         type: 'FeatureCollection',
         features: locations
       });
+
+      if ($body.attr('id') !== 'map-template') return true;
 
       // map events
       map.on('click', function(e) {
         if ($('#pane-container').hasClass('open')) that.closePane();
       });
       map.markerLayer.on('click', function(e) {
-        var location;
+        var location,
+            markerId = 'marker-' + e.layer._leaflet_id;
+
         e.layer.unbindPopup();
-        // get cursor location relative to page height
-        var pageY = e.originalEvent.clientY;  
-        location = (pageY > ($(window).height() / 2)) ? 'top' : 'bottom';
-        that.openPane(location, 'marker-' + e.layer._leaflet_id, 'marker-' + e.layer._leaflet_id);
-        console.log(e);
+        
+        if ($('#pane-container').data('opened-by') === markerId) {
+          that.closePane();
+        } else {
+          // get cursor location relative to page height and open in proper position
+          var pageY = e.originalEvent.clientY;  
+          location = (pageY > ($(window).height() / 2)) ? 'top' : 'bottom';
+          that.openPane(location, markerId, markerId);
+        }
       });
     }
   },

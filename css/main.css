@@ -53,7 +53,22 @@ textarea {
    ========================================================================== */
 
 
-body { margin:0; padding:0; }
+body { margin:0; padding:0; font-family: 'Source Sans Pro', sans-serif; }
+a { color: #386CA0; }
+
+#listing-template {
+  background: url('/img/bg-wood.jpg');
+}
+#listing-template #locations {
+  display: none;
+}
+
+#header-img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 header {
   font-family: 'Pathway Gothic One', sans-serif; 
   position: absolute;
@@ -71,16 +86,32 @@ header {
   margin: auto;
   height: 39px;
 }
+#listing-template header {
+  position: static;
+  background: #29252C;
+}
 header span { color: #c99; text-transform: lowercase; }
+header span span { color: #eef; }
 header a {
   color: #c99;
   text-decoration: none;
   outline: none !important;
 }
 header a:hover, header a:active {
-  color: #f88;
+  color: #e88;
 }
+
+#map-template h1 {
+  display: none;
+}
+
 #map { position:absolute; top:0; bottom:0; width:100%; }
+#listing-template #map {
+  position: static;
+  height: 360px;
+  margin-top: 3em;
+  border: 3px solid #c99;
+}
 
 #pane-container {
   display: none;
@@ -89,8 +120,7 @@ header a:hover, header a:active {
   position: absolute;
   top: 0;
   z-index: 999;
-  background: #fff;
-  background: rgba(255,255,255,0.9);
+  background: url('/img/bg-wood.jpg');
   overflow: auto;
 }
 #pane-container.open {
@@ -101,11 +131,46 @@ header a:hover, header a:active {
   bottom: 0;
 }
 #pane {
-  padding: 2em 5%;
+  padding: 1em 5%;
+}
+#pane-main {
+  float: left;
+  width: 65%;
+}
+#pane-main h2 strong {
+  text-transform: capitalize;
+}
+#pane-main ul {
+  list-style: none;
+  margin: 1em 0;
+  padding: 0;
+}
+#pane-main ul li {
+  margin: 1em 0;
+}
+#pane-sidebar {
+  float: right;
+  width: 30%;
 }
 
-
-
+#listing-content {
+  padding: 1px 5%;
+}
+#listing-content h1 {
+  color: #754949;
+  margin: 1em 0 0;
+}
+#listing-content p {
+  font-size: 1.3em;
+}
+#listing-main {
+  width: 65%;
+  float: left;
+}
+#listing-sidebar {
+  width: 30%;
+  float: right;
+}
 
 
 

@@ -1,0 +1,11 @@
+---
+layout: none
+permalink: .htaccess
+---
+Redirect 302 /index.html /charleston/
+
+RewriteEngine On
+RewriteCond %{REQUEST_URI} /img/headers/.*\.(jpg|jpeg|gif|png)$ [NC]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule .*$ /img/headers/no-image.jpg [L]
