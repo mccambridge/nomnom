@@ -11,7 +11,11 @@
   
   <title>{{ page.title }} | Grub Globe</title>
   
-  <meta name="description" content="{{ page.title }} is one place worth checking out in {{ page.city }}">
+  {% if page.desc %}
+    <meta name="description" content="{{ page.desc }}">
+  {% else %}
+    <meta name="description" content="{{ page.title }} is one place worth checking out in {{ page.city }}">
+  {% endif %}
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   
   <script src="http://api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.js"></script>
@@ -31,6 +35,20 @@
   <div id="listing-content" class="clearfix">
     <div id="listing-sidebar">
       <div id="map"></div>
+      <div id="address">
+      {{ if page.street }}
+        <p>{{ page.street }}</p>
+      {{ endif }}
+      {{ if page.citystatezip }}
+        <p>{{ page.citystatezip }}</p>
+      {{ endif }}
+      {{ if page.website }}
+        <p><a href="http://{{ page.website }}">{{ page.website }}</a></p>
+      {{ endif }}
+      {{ if page.phone }}
+        <p>{{ page.phone }}</p>
+      {{ endif }}
+      </div>
     </div>
     <div id="listing-main">
       {{ content }}

@@ -1,7 +1,12 @@
 var Grub = {
+  swiper: {},
+  map: {},
+
   init: function() {
     var bodyId = $('body').attr('id');
-    if (bodyId === 'map-template' || bodyId === 'listing-template') this.createMap(); // only on map pages
+    if (bodyId === 'map-template' || bodyId === 'listing-template') {
+      this.map = this.createMap(); // only on map pages
+    }
     this.events();
   },
 
@@ -9,7 +14,7 @@ var Grub = {
     this.mapEvents();
   },
 
-  swiper: function() {
+  initSwiper: function() {
     var mySwiper = new Swiper('.swiper-container' ,{
       slidesPerView: 3,
       loop: true
@@ -18,7 +23,7 @@ var Grub = {
     // add nav buttons to #pane
     var paneHeight = $('#pane-container').height();
     var navArrows = '<a href="#" id="swiper-prev" class="ir" style="height: ' + paneHeight + 'px">previous</a><a href="#" id="swiper-next" class="ir" style="height: ' + paneHeight + 'px"><span>next</span></a>';
-    $('#pane').append(navArrows);
+    $('#pane').append(navArrows).addClass('swiperInit');
     $('#swiper-prev').on('click', function(e) {
       e.preventDefault();
       mySwiper.swipePrev();
@@ -27,32 +32,44 @@ var Grub = {
       e.preventDefault();
       mySwiper.swipeNext();
     });
+    return mySwiper;
   },
 
   mapEvents: function() {
     if ($('body').attr('id') !== 'map-template') return false;
     var that = this;
+    
+    // init locations
+    this.createPane();
+
     $('#header-city').on('click', function(e) {
       e.preventDefault();
       var $this = $(this),
           where = ($('#pane-container').hasClass('top')) ? 'top' : 'bottom';
-          theId = $this.attr('id'),
-          markup = '<div id="pane-main" class="swiper-container">';
-          markup += '<ul id="city-locations" class="swiper-wrapper">';
-          markup += $('#locations').html();
-          markup += '</ul></div>';
-      ($('#pane-container').data('opened-by') === theId) ? that.closePane() : that.openPane(where, theId, markup, '#city-locations');
+          theId = $this.attr('id');
+
+      ($('#pane-container').hasClass('open')) ? that.closePane() : that.openPane(where, theId);
     });
   },
 
-  openPane: function(position, openedBy, markup, swiper) {
+  createPane: function() {
     var $paneContainer = $('#pane-container'),
-        swiperId = swiper || false;
+        swiper = '#city-locations',
         $pane = $paneContainer.children('#pane');
-    $paneContainer.addClass('open ' + position).data('opened-by', openedBy).css({'height': ($(window).height() / 2 - ($('header').height() / 2))});
+      
+    var markup = '<div id="pane-main" class="swiper-container">';
+    markup += '<ul id="city-locations" class="swiper-wrapper">';
+    markup += $('#locations').html();
+    markup += '</ul></div>';
+
     $pane.html(markup);
-    if (swiperId) {
-      this.swiper();
+  },
+
+  openPane: function(position, openedBy) {
+    var $paneContainer = $('#pane-container');
+    $paneContainer.addClass('open ' + position).data('opened-by', openedBy).css({'height': ($(window).height() / 2 - ($('header').height() / 2))});
+    if (!$('#pane').hasClass('swiperInit')) {
+      this.swiper = this.initSwiper();
     }
   },
 
@@ -60,7 +77,7 @@ var Grub = {
     var $paneContainer = $('#pane-container'),
         $pane = $paneContainer.children('#pane');
     $paneContainer.removeClass('open top bottom').data('opened-by', '');
-    $pane.html('');
+    this.map.closePopup();
   },
 
   createMap: function() {
@@ -89,17 +106,19 @@ var Grub = {
             markerId = 'marker-' + e.layer._leaflet_id;
 
         //e.layer.unbindPopup();
-        //
-        //if ($('#pane-container').data('opened-by') === markerId) {
-        //  that.closePane();
-        //} else {
-        //  // get cursor location relative to page height and open in proper position
-        //  var pageY = e.originalEvent.clientY;  
-        //  location = (pageY > ($(window).height() / 2)) ? 'top' : 'bottom';
-        //  that.openPane(location, markerId, markerId);
-        //}
+        
+        if ($('#pane-container').data('opened-by') === markerId) {
+          that.closePane();
+        } else {
+          // get cursor location relative to page height and open in proper position
+          var pageY = e.originalEvent.clientY;  
+          location = (pageY > ($(window).height() / 2)) ? 'top' : 'bottom';
+          that.openPane(location, markerId);
+          that.swiper.swipeTo(e.layer.feature.properties.index - 1); // open the right place
+        }
       });
     }
+    return map;
   },
 
   locationsFromHTML: function() {
@@ -122,8 +141,8 @@ var Grub = {
           'marker-color': '#f63a39',
           'marker-symbol': $this.data('type'),
           title: $names.eq(i).text(),
-          description: $descs.eq(i).html(),
-          url: $urls.eq(i).attr('href')
+          url: $urls.eq(i).attr('href'),
+          index: $this.index()
         }
       });
     }

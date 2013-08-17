@@ -141,19 +141,22 @@ header a:hover, header a:active {
   width: 3%;
   height: 100%;
   background: #fff url('/img/arrow-left.png') no-repeat center center;
-  background: rgba(255,255,255,0.7) url('/img/arrow-left.png') no-repeat center center;
+  background: rgba(255,255,255,0.5) url('/img/arrow-left.png') no-repeat center center;
   display: block;
   position: absolute;
   left: 0;
   top: 0;
   text-align: center;
-  background: ;
+  outline: none !important;
+}
+#swiper-prev:hover, #swiper-next:hover {
+  background-color: rgba(255,255,255,0.9);
 }
 #swiper-next {
   left: auto;
   right: 0;
   background: #fff url('/img/arrow-right.png') no-repeat center center;
-  background: rgba(255,255,255,0.7) url('/img/arrow-right.png') no-repeat center center;
+  background: rgba(255,255,255,0.5) url('/img/arrow-right.png') no-repeat center center;
 }
 #pane-main h2 strong {
   text-transform: capitalize;
@@ -178,7 +181,7 @@ header a:hover, header a:active {
   padding: 1px 5%;
 }
 #listing-content h1 {
-  color: #754949;
+  color: #5e5c4f;
   margin: 1em 0 0;
 }
 #listing-content p {
@@ -191,6 +194,14 @@ header a:hover, header a:active {
 #listing-sidebar {
   width: 30%;
   float: right;
+  font-size: 0.9em;
+  color: #4a4f37;
+}
+#listing-sidebar #address {
+  margin: 1em 0.75%;
+}
+#listing-sidebar #address p {
+  margin: 0;
 }
 
 
