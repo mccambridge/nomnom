@@ -29,7 +29,7 @@
   <script src="/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 </head>
 <body id="map-template" data-lat="{{ page.lat }}" data-lon="{{ page.lon }}" data-zoom="{{ page.zoom }}">
-  <header>grub globe <span>/ <a id="header-city" href="/locations/">{{ page.city }}</a></span></header>
+  <header><a href="/">grub globe</a> <span>/ <a id="header-city" href="/{{ page.city }}/">{{ page.city }}</a></span></header>
   <h1>50 Best Restaurants, Bars & Coffee Shops in <strong>{{ page.city }}</strong></h1>
   <div id="map"></div>
 

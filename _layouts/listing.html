@@ -31,7 +31,7 @@
 </head>
 <body id="listing-template" data-lat="{{ page.lat }}" data-lon="{{ page.lon }}" data-zoom="{{ page.zoom }}">
   <img id="header-img" src="/img/headers/{{ page.uri }}-{{ page.city }}.jpg" alt="{{ page.title }}">
-  <header>grub globe <span>/ <a id="header-city" href="/{{ page.city }}">{{ page.city }}</a> <span> / {{ page.title }}</span></span></header>
+  <header><a href="/">grub globe</a> <span>/ <a id="header-city" href="/{{ page.city }}">{{ page.city }}</a> <span> / {{ page.title }}</span></span></header>
   <div id="listing-content" class="clearfix">
     <div id="listing-sidebar">
       <div id="map"></div>

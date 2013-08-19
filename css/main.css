@@ -79,7 +79,7 @@ header {
   width: 95%;
   background: #000;
   background: rgba(0,0,0,0.7);
-  color: #fff;
+  color: #eee;
   text-align: center;
   z-index: 1000;
   font-size: 1.65em;
@@ -93,11 +93,19 @@ header {
 header span { color: #c99; text-transform: lowercase; }
 header span span { color: #eef; }
 header a {
-  color: #c99;
+  color: #e6e6ee;
   text-decoration: none;
   outline: none !important;
 }
 header a:hover, header a:active {
+  color: #fff;
+}
+header span a {
+  color: #c99;
+  text-decoration: none;
+  outline: none !important;
+}
+header span a:hover, header a:active {
   color: #e88;
 }
 

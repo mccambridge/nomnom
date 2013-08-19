@@ -21,7 +21,7 @@ var Grub = {
     });
 
     // add nav buttons to #pane
-    var paneHeight = $('#pane-container').height();
+    var paneHeight = $('#pane-container').height() + 1;
     var navArrows = '<a href="#" id="swiper-prev" class="ir" style="height: ' + paneHeight + 'px">previous</a><a href="#" id="swiper-next" class="ir" style="height: ' + paneHeight + 'px"><span>next</span></a>';
     $('#pane').append(navArrows).addClass('swiperInit');
     $('#swiper-prev').on('click', function(e) {
