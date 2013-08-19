@@ -275,11 +275,11 @@ header span a:hover, header a:active {
   #swiper-prev, #swiper-next {
     opacity: 1;
     background-color: #fff;
-    background-color: rgba(0,0,0,0.6);
+    background-color: rgba(0,0,0,0.7);
     width: 3%;
   }
   #swiper-prev:hover, #swiper-next:hover {
-    background-color: rgba(0,0,0,0.9);
+    background-color: rgba(30,52,75,0.8);
   }
   #listing-template #map {
     height: 360px;
@@ -289,7 +289,7 @@ header span a:hover, header a:active {
     margin: 1em 0.75%;
   }
   #pane-container {
-    background: #666;
+    background: #aaa;
   }
   #pane-main {
     width: 94%;
@@ -299,7 +299,7 @@ header span a:hover, header a:active {
     padding: 2em 5% 0;
   }
   #pane-main ul li div:hover {
-    background: rgba(255, 225, 215, 0.15);
+    background: rgba(214, 213, 97, 0.25);
   }
 }
 
