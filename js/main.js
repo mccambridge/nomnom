@@ -1,6 +1,7 @@
 var Grub = {
   swiper: {},
   map: {},
+  zoom: {},
 
   init: function() {
     if (typeof Utilities !== 'undefined') {
@@ -77,6 +78,9 @@ var Grub = {
 
   openPane: function(position, openedBy) {
     var $paneContainer = $('#pane-container');
+    if (position === 'top') {
+      this.moveZoomControls('bottomleft');
+    }
     $paneContainer.addClass('open ' + position).data('opened-by', openedBy).css({'height': ($(window).height() / 2 - ($('header').height() / 2))});
     if (!$('#pane').hasClass('swiperInit')) {
       this.swiper = this.initSwiper();
@@ -86,8 +90,16 @@ var Grub = {
   closePane: function() {
     var $paneContainer = $('#pane-container'),
         $pane = $paneContainer.children('#pane');
+    if ($paneContainer.hasClass('top')) {
+      this.moveZoomControls('topleft');
+    }
     $paneContainer.removeClass('open top bottom').data('opened-by', '');
     this.map.closePopup();
+  },
+
+  moveZoomControls: function(pos) {
+    this.map.removeControl(this.zoom);
+    this.zoom = new L.Control.Zoom({ position: pos }).addTo(this.map);
   },
 
   createMap: function() {
@@ -99,11 +111,14 @@ var Grub = {
     if (locations) {
       latlng.push($body.data('lat'));
       latlng.push($body.data('lon'));
-      var map = L.mapbox.map('map', 'mccambridge.map-xne0uzqo').setView(latlng, zoom);
+      var map = L.mapbox.map('map', 'mccambridge.map-xne0uzqo', { zoomControl: false }).setView(latlng, zoom);
       map.markerLayer.setGeoJSON({
         type: 'FeatureCollection',
         features: locations
       });
+
+      // add zoom manually (so we can move it if need be)
+      this.zoom = new L.Control.Zoom({ position: 'topleft' }).addTo(map);
 
       if ($body.attr('id') === 'listing-template') {
         if (this.device() === 'mobile') {
