@@ -78,7 +78,7 @@ header {
   bottom: 0;
   width: 95%;
   background: #000;
-  background: rgba(0,0,0,0.7);
+  background: rgba(0,0,0,0.6);
   color: #eee;
   text-align: center;
   z-index: 1000;
@@ -91,7 +91,7 @@ header {
   background: #29252C;
 }
 header span { color: #c99; text-transform: lowercase; }
-header span span { color: #eef; }
+header span span { color: #eef; display: none; }
 header a {
   color: #e6e6ee;
   text-decoration: none;
@@ -118,7 +118,7 @@ header span a:hover, header a:active {
   position: static;
   height: 360px;
   margin-top: 3em;
-  border: 3px solid #c99;
+  box-shadow: 0 0 4px #a66;
 }
 
 #pane-container {
@@ -148,8 +148,8 @@ header span a:hover, header a:active {
 #swiper-prev, #swiper-next {
   width: 3%;
   height: 100%;
-  background: #fff url('/img/arrow-left.png') no-repeat center center;
-  background: rgba(255,255,255,0.5) url('/img/arrow-left.png') no-repeat center center;
+  background: url('/img/arrow-left.png') no-repeat center center;
+  background: url('/img/arrow-left.png') no-repeat center center;
   display: block;
   position: absolute;
   left: 0;
@@ -157,14 +157,11 @@ header span a:hover, header a:active {
   text-align: center;
   outline: none !important;
 }
-#swiper-prev:hover, #swiper-next:hover {
-  background-color: rgba(255,255,255,0.9);
-}
 #swiper-next {
   left: auto;
   right: 0;
-  background: #fff url('/img/arrow-right.png') no-repeat center center;
-  background: rgba(255,255,255,0.5) url('/img/arrow-right.png') no-repeat center center;
+  background: url('/img/arrow-right.png') no-repeat center center;
+  background: url('/img/arrow-right.png') no-repeat center center;
 }
 #pane-main h2 strong {
   text-transform: capitalize;
@@ -196,12 +193,9 @@ header span a:hover, header a:active {
   font-size: 1.3em;
 }
 #listing-main {
-  width: 65%;
-  float: left;
+  
 }
 #listing-sidebar {
-  width: 30%;
-  float: right;
   font-size: 0.9em;
   color: #4a4f37;
 }
@@ -223,12 +217,27 @@ header span a:hover, header a:active {
    Media Queries
    ========================================================================== */
 
-@media only screen and (min-width: 480px) {
+@media only screen and (min-width: 320px) {
 
 }
 
 @media only screen and (min-width: 768px) {
-
+  header span span { display: inline; }
+  #listing-main {
+    width: 65%;
+    float: left;
+  }
+  #listing-sidebar {
+    width: 30%;
+    float: right;
+  }
+  #swiper-prev, #swiper-next {
+    background-color: #fff;
+    background-color: rgba(255,255,255,0.5);
+  }
+  #swiper-prev:hover, #swiper-next:hover {
+    background-color: rgba(255,255,255,0.9);
+  }
 }
 
 @media only screen and (min-width: 1140px) {

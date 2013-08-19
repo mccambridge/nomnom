@@ -105,6 +105,13 @@ var Grub = {
         features: locations
       });
 
+      if ($body.attr('id') === 'listing-template') {
+        if (this.device() === 'mobile') {
+          var $map = $('#map').detach();
+          $('#listing-main').children('h1').after($map);
+        }
+      }
+
       if ($body.attr('id') !== 'map-template') return true;
 
       // map events
