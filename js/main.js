@@ -3,6 +3,10 @@ var Grub = {
   map: {},
 
   init: function() {
+    if (typeof Utilities !== 'undefined') {
+      $.extend(Grub, Utilities);
+      this.device();
+    }
     var bodyId = $('body').attr('id');
     if (bodyId === 'map-template' || bodyId === 'listing-template') {
       this.map = this.createMap(); // only on map pages
@@ -15,9 +19,15 @@ var Grub = {
   },
 
   initSwiper: function() {
+    var that = this,
+        slides = (this.device() === 'mobile') ? 1 : 3;
+
     var mySwiper = new Swiper('.swiper-container' ,{
-      slidesPerView: 3,
-      loop: true
+      slidesPerView: slides,
+      loop: true,
+      onSlideChangeStart: function(swiper) {
+        that.map.closePopup();
+      }
     });
 
     // add nav buttons to #pane
@@ -111,10 +121,11 @@ var Grub = {
           that.closePane();
         } else {
           // get cursor location relative to page height and open in proper position
-          var pageY = e.originalEvent.clientY;  
+          var pageY = e.originalEvent.clientY,
+              offset = (that.device() === 'mobile') ? 0 : 1;
           location = (pageY > ($(window).height() / 2)) ? 'top' : 'bottom';
           that.openPane(location, markerId);
-          that.swiper.swipeTo(e.layer.feature.properties.index - 1); // open the right place
+          that.swiper.swipeTo(e.layer.feature.properties.index - offset); // open the right place
         }
       });
     }
