@@ -81,7 +81,7 @@ var Grub = {
     if (position === 'top') {
       this.moveZoomControls('bottomleft');
     }
-    $paneContainer.addClass('open ' + position).data('opened-by', openedBy).css({'height': ($(window).height() / 2 - ($('header').height() / 2))});
+    $paneContainer.addClass('open ' + position).data('opened-by', openedBy).css({'height': ($(window).height() / 2 - ($('header').height() / 2) + 2)});
     if (!$('#pane').hasClass('swiperInit')) {
       this.swiper = this.initSwiper();
     }
@@ -124,6 +124,8 @@ var Grub = {
         if (this.device() === 'mobile') {
           var $map = $('#map').detach();
           $('#listing-main').children('h1').after($map);
+          var $address = $('#address').detach();
+          $('#listing-main').children('h1').after($address);
         }
       }
 
@@ -179,7 +181,6 @@ var Grub = {
         }
       });
     }
-    $locations.parent().css({'display': 'none'});
     return locations;
   }
 };

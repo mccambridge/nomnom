@@ -59,7 +59,8 @@ a { color: #386CA0; }
 #listing-template {
   background: url('/img/bg-wood.jpg');
 }
-#listing-template #locations {
+
+#locations {
   display: none;
 }
 
@@ -78,13 +79,14 @@ header {
   bottom: 0;
   width: 95%;
   background: #000;
-  background: rgba(0,0,0,0.6);
+  background: rgba(0,0,0,0.7);
   color: #eee;
   text-align: center;
   z-index: 1000;
   font-size: 1.65em;
   margin: auto;
   height: 39px;
+  overflow: hidden;
 }
 #listing-template header {
   position: static;
@@ -116,15 +118,14 @@ header span a:hover, header a:active {
 #map { position:absolute; top:0; bottom:0; width:100%; }
 #listing-template #map {
   position: static;
-  height: 360px;
-  margin-top: 3em;
+  height: 240px;
+  margin-top: 2em;
   box-shadow: 0 0 4px #a66;
 }
 
 #pane-container {
   display: none;
   width: 100%;
-  height: 50%;
   position: absolute;
   top: 0;
   z-index: 999;
@@ -143,10 +144,11 @@ header span a:hover, header a:active {
   position: relative;
 }
 #pane-main {
-  width: 94%;
+  
 }
 #swiper-prev, #swiper-next {
-  width: 3%;
+  width: 6%;
+  opacity: 0.5;
   height: 100%;
   background: url('/img/arrow-left.png') no-repeat center center;
   background: url('/img/arrow-left.png') no-repeat center center;
@@ -154,6 +156,7 @@ header span a:hover, header a:active {
   position: absolute;
   left: 0;
   top: 0;
+  z-index: 1000;
   text-align: center;
   outline: none !important;
 }
@@ -177,13 +180,44 @@ header span a:hover, header a:active {
   width: 320px;
   height: 300px;
   vertical-align: top;
+  position: relative;
+}
+#pane-main ul li a {
+  color: #E6E6EE;
+  display: block;
+  text-decoration: none;
+}
+#pane-main ul li a:hover, #pane-main ul li a:active {
+  color: #fff;
+}
+#pane-main ul li img {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+}
+#pane-main ul li div {
+  position: absolute;
+  top: 0; left: 0;
+  width: 84%; height: 500px;
+  padding: 0 7%;
 }
 #pane-main ul li h2, #pane-main ul li p {
-  margin: 0.83em 3%;
+  color: #E6E6EE;
+}
+#pane-main ul li h2 {
+  margin: 0.5em 0 0;
+}
+#pane-main ul li p {
+  margin: 0.5em 0;
+  font-size: 0.9em;
 }
 
 #listing-content {
   padding: 1px 5%;
+  max-width: 1152px;
 }
 #listing-content h1 {
   color: #5e5c4f;
@@ -199,11 +233,18 @@ header span a:hover, header a:active {
   font-size: 0.9em;
   color: #4a4f37;
 }
-#listing-sidebar #address {
-  margin: 1em 0.75%;
+#address {
+  margin: 0.25em 0.75%;
+  font-weight: bold;
 }
-#listing-sidebar #address p {
+#address p {
   margin: 0;
+}
+#address p:last-child {
+  font-weight: normal;
+}
+#address a {
+  font-weight: normal;
 }
 
 
@@ -232,12 +273,38 @@ header span a:hover, header a:active {
     float: right;
   }
   #swiper-prev, #swiper-next {
+    opacity: 1;
     background-color: #fff;
-    background-color: rgba(255,255,255,0.5);
+    background-color: rgba(0,0,0,0.6);
+    width: 3%;
   }
   #swiper-prev:hover, #swiper-next:hover {
-    background-color: rgba(255,255,255,0.9);
+    background-color: rgba(0,0,0,0.9);
   }
+  #listing-template #map {
+    height: 360px;
+    margin-top: 3em;
+  }
+  #address {
+    margin: 1em 0.75%;
+  }
+  #pane-container {
+    background: #666;
+  }
+  #pane-main {
+    width: 94%;
+  }
+  #pane-main ul li div {
+    width: 90%;
+    padding: 2em 5% 0;
+  }
+  #pane-main ul li div:hover {
+    background: rgba(255, 225, 215, 0.15);
+  }
+}
+
+@media only screen and (min-width: 1000px) {
+  body { min-width: 960px; }
 }
 
 @media only screen and (min-width: 1140px) {

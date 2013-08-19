@@ -30,6 +30,11 @@
   <script src="/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 </head>
 <body id="listing-template" data-lat="{{ page.lat }}" data-lon="{{ page.lon }}" data-zoom="{{ page.zoom }}">
+  <noscript>
+    <style type="text/css">
+      #locations { display: block; }
+    </style>
+  </noscript>
   <img id="header-img" src="/img/headers/{{ page.uri }}-{{ page.city }}.jpg" alt="{{ page.title }}">
   <header><a href="/">grub globe</a> <span>/ <a id="header-city" href="/{{ page.city }}">{{ page.city }}</a> <span> / {{ page.title }}</span></span></header>
   <div id="listing-content" class="clearfix">
