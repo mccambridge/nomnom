@@ -3,6 +3,7 @@ var Grub = {
   map: {},
   zoom: {},
   height: '',
+  me: {},
 
   init: function() {
     if (typeof Utilities !== 'undefined') {
@@ -12,6 +13,7 @@ var Grub = {
     var bodyId = $('body').attr('id');
     if (bodyId === 'map-template' || bodyId === 'listing-template') {
       this.map = this.createMap(); // only on map pages
+      this.mapLocate();
     }
     this.events();
   },
@@ -67,6 +69,23 @@ var Grub = {
 
       //($('#pane-container').hasClass('open')) ? that.closePane() : that.openPane(where, theId); // was click event
     });
+  },
+
+  mapLocate: function() {
+    var that = this;
+    if (navigator.geolocation) {
+      this.map.locate({watch: true});
+      this.map.on('locationfound', function(e) {
+        var latlng = [e.latlng.lat, e.latlng.lng];
+        that.me = L.marker(latlng);
+        that.me.addTo(that.map);
+        var current = that.map.getCenter();
+        var user = new L.LatLng(latlng[0], latlng[1]);
+        if (user.distanceTo(current) < 40000) { // if less than 40000 meters
+          that.map.panTo(latlng);
+        }
+      });
+    }
   },
 
   createPane: function() {
@@ -168,7 +187,7 @@ var Grub = {
   locationsFromHTML: function() {
     if (!$('#locations').length) return false;
     var locations = [],
-        $locations = $('#locations').find('li').not('#city-slide'),
+        $locations = $('#locations').find('li.location'),
         $names = $locations.find('h2'), // cache for speed
         $descs = $locations.find('p'), // zoom!
         $urls = $locations.find('a'); // whoosh!
