@@ -2,6 +2,7 @@ var Grub = {
   swiper: {},
   map: {},
   zoom: {},
+  height: '',
 
   init: function() {
     if (typeof Utilities !== 'undefined') {
@@ -46,12 +47,17 @@ var Grub = {
     return mySwiper;
   },
 
+  setHeight: function() {
+    this.height = $(window).height() / 2 - ($('header').height() / 2);
+  },
+
   mapEvents: function() {
     if ($('body').attr('id') !== 'map-template') return false;
     var that = this;
     
     // init locations
     this.createPane();
+    that.openPane('bottom', '#header-city'); // open on init now, id doensn't matter
 
     $('#header-city').on('click', function(e) {
       e.preventDefault();
@@ -59,7 +65,7 @@ var Grub = {
           where = ($('#pane-container').hasClass('top')) ? 'top' : 'bottom';
           theId = $this.attr('id');
 
-      ($('#pane-container').hasClass('open')) ? that.closePane() : that.openPane(where, theId);
+      //($('#pane-container').hasClass('open')) ? that.closePane() : that.openPane(where, theId); // was click event
     });
   },
 
@@ -81,7 +87,8 @@ var Grub = {
     if (position === 'top') {
       this.moveZoomControls('bottomleft');
     }
-    $paneContainer.addClass('open ' + position).data('opened-by', openedBy).css({'height': ($(window).height() / 2 - ($('header').height() / 2) + 2)});
+    $paneContainer.addClass('open ' + position).data('opened-by', openedBy).css({'height': this.height + 2});
+
     if (!$('#pane').hasClass('swiperInit')) {
       this.swiper = this.initSwiper();
     }
@@ -109,6 +116,8 @@ var Grub = {
         zoom = $body.data('zoom') || 11,
         that = this;
     if (locations) {
+      this.setHeight();
+      $('#map').css({'height': this.height}); // shore up map to upper pane
       latlng.push($body.data('lat'));
       latlng.push($body.data('lon'));
       var map = L.mapbox.map('map', 'mccambridge.map-xne0uzqo', { zoomControl: false }).setView(latlng, zoom);
@@ -133,7 +142,7 @@ var Grub = {
 
       // map events
       map.on('click', function(e) {
-        if ($('#pane-container').hasClass('open')) that.closePane();
+        // if ($('#pane-container').hasClass('open')) that.closePane(); // clicking on map used to close pane
       });
       map.markerLayer.on('click', function(e) {
         var location,
@@ -142,7 +151,7 @@ var Grub = {
         //e.layer.unbindPopup();
         
         if ($('#pane-container').data('opened-by') === markerId) {
-          that.closePane();
+          // that.closePane(); // clicking on container responsible for opening pane used to toggle pane
         } else {
           // get cursor location relative to page height and open in proper position
           var pageY = e.originalEvent.clientY,
@@ -159,7 +168,7 @@ var Grub = {
   locationsFromHTML: function() {
     if (!$('#locations').length) return false;
     var locations = [],
-        $locations = $('#locations').find('li'),
+        $locations = $('#locations').find('li').not('#city-slide'),
         $names = $locations.find('h2'), // cache for speed
         $descs = $locations.find('p'), // zoom!
         $urls = $locations.find('a'); // whoosh!

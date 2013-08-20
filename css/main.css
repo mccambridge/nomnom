@@ -56,6 +56,14 @@ textarea {
 body { margin:0; padding:0; font-family: 'Source Sans Pro', sans-serif; }
 a { color: #386CA0; }
 
+.mobile-copy {
+
+}
+
+.desktop-copy {
+  display: none;
+}
+
 #listing-template {
   background: url('/img/bg-wood.jpg');
 }
@@ -182,8 +190,14 @@ header span a:hover, header a:active {
   vertical-align: top;
   position: relative;
 }
+#pane-main ul li#city-slide div {
+  padding-top: 1em;
+}
+#pane-main ul li#city-slide div:hover {
+  background: none;
+}
 #pane-main ul li a {
-  color: #E6E6EE;
+  color: #fff;
   display: block;
   text-decoration: none;
 }
@@ -202,10 +216,10 @@ header span a:hover, header a:active {
   position: absolute;
   top: 0; left: 0;
   width: 84%; height: 500px;
-  padding: 0 7%;
+  padding: 0 8%;
 }
 #pane-main ul li h2, #pane-main ul li p {
-  color: #E6E6EE;
+  color: #fff;
 }
 #pane-main ul li h2 {
   margin: 0.5em 0 0;
@@ -263,6 +277,12 @@ header span a:hover, header a:active {
 }
 
 @media only screen and (min-width: 768px) {
+  .mobile-copy {
+    display: none;
+  }
+  .desktop-copy {
+    display: block;
+  }
   header span span { display: inline; }
   #listing-main {
     width: 65%;
@@ -279,7 +299,7 @@ header span a:hover, header a:active {
     width: 3%;
   }
   #swiper-prev:hover, #swiper-next:hover {
-    background-color: rgba(30,52,75,0.8);
+    background-color: #625834;
   }
   #listing-template #map {
     height: 360px;
@@ -297,6 +317,9 @@ header span a:hover, header a:active {
   #pane-main ul li div {
     width: 90%;
     padding: 2em 5% 0;
+  }
+  #pane-main ul li#city-slide div {
+    padding-top: 2.5em;
   }
   #pane-main ul li div:hover {
     background: rgba(214, 213, 97, 0.25);
