@@ -74,7 +74,7 @@ var Grub = {
   mapLocate: function() {
     var that = this;
     if (navigator.geolocation) {
-      this.map.locate({watch: true});
+      this.map.locate();
       this.map.on('locationfound', function(e) {
         var latlng = [e.latlng.lat, e.latlng.lng];
         that.me = L.marker(latlng);

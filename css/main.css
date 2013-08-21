@@ -200,6 +200,9 @@ header span a:hover, header a:active {
   display: block;
   text-decoration: none;
 }
+#pane-main ul li p a {
+  display: inline;
+}
 #pane-main ul li a:hover, #pane-main ul li a:active {
   color: #fff;
 }
