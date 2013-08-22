@@ -1,1 +1,3 @@
-auto: true
+assets:
+  js_compressor:  null
+  css_compressor: sass

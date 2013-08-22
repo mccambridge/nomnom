@@ -1,6 +1,11 @@
+//= require plugins
+//= require swiper
+//= require utilities
+
 var Grub = {
   swiper: {},
   map: {},
+  marker: {},
   zoom: {},
   height: '',
   me: {},
@@ -22,6 +27,51 @@ var Grub = {
     this.mapEvents();
   },
 
+  markerDefault: function() {
+    this.marker.properties["marker-color"] = '#f63a39';
+    this.marker.properties["marker-size"] = 'medium';
+    this.map.markerLayer.clearLayers();
+    this.map.markerLayer.setGeoJSON(this.map.markerLayer.getGeoJSON());
+    $('#map').find('.leaflet-marker-pane').find('img').removeClass('top');
+  },
+
+  focusOnMarker: function(slide) {
+    $locations = $('#locations').find('li');
+    console.log('original:' + slide);
+    if (typeof this.marker.properties !== 'undefined') {
+      this.markerDefault(); // will fail unless already set from below
+    }
+    if (slide === 0 || slide === $locations.length) { // last slide
+      slide = $locations.length;
+    }
+    slide = slide - ((this.device() === 'mobile') ? 2 : 4); // offset for city slide and array index ... two more if desktop
+    var markers = this.map.markerLayer.getGeoJSON().features;
+    if (typeof slide !== 'number' || slide < 0) {
+      slide = markers.length + slide + 1; // now if the desktop slide is negative b/c of our offsetting, we have to correct
+    }
+    if (slide >= markers.length) {
+      this.panToCityCenter();
+      return false;
+    }
+    this.marker = this.map.markerLayer.getGeoJSON().features[slide]; // get marker in geojson
+    console.log('second' + slide + ' vs ' + markers.length);
+    this.marker.properties["marker-color"] = '#fe0';
+    this.marker.properties["marker-size"] = 'large';
+    this.map.markerLayer.clearLayers(); // kill em all!
+    this.map.markerLayer.setGeoJSON(this.map.markerLayer.getGeoJSON()); // create new ones
+    $('#map').find('.leaflet-marker-pane').find('img').eq(slide).addClass('top'); // z-index: 9999
+    this.map.panTo([this.marker.geometry.coordinates[1], this.marker.geometry.coordinates[0]]);// center map on marker
+    if (this.map.getZoom !== 15) {
+      //this.map.setZoom(15); // only reset zoom if not already this close
+    }
+  },
+
+  panToCityCenter: function() {
+    var $body = $('body');
+    var latlng = [$body.data('lat'), $body.data('lon')];
+    this.map.panTo(latlng);
+  },
+
   initSwiper: function() {
     var that = this,
         slides = (this.device() === 'mobile') ? 1 : 3;
@@ -31,6 +81,7 @@ var Grub = {
       loop: true,
       onSlideChangeStart: function(swiper) {
         that.map.closePopup();
+        that.focusOnMarker(that.swiper.activeIndex);
       }
     });
 
@@ -54,6 +105,7 @@ var Grub = {
   },
 
   mapEvents: function() {
+    // this got a little messy. need to clean up
     if ($('body').attr('id') !== 'map-template') return false;
     var that = this;
     
@@ -63,15 +115,12 @@ var Grub = {
 
     $('#header-city').on('click', function(e) {
       e.preventDefault();
-      var $this = $(this),
-          where = ($('#pane-container').hasClass('top')) ? 'top' : 'bottom';
-          theId = $this.attr('id');
-
-      //($('#pane-container').hasClass('open')) ? that.closePane() : that.openPane(where, theId); // was click event
+      that.swiper.swipeTo(0);
     });
   },
 
   mapLocate: function() {
+    // geolocate users position
     var that = this;
     if (navigator.geolocation) {
       this.map.locate();
@@ -89,6 +138,7 @@ var Grub = {
   },
 
   createPane: function() {
+    // create lower split-screen on map page
     var $paneContainer = $('#pane-container'),
         swiper = '#city-locations',
         $pane = $paneContainer.children('#pane');
@@ -102,6 +152,7 @@ var Grub = {
   },
 
   openPane: function(position, openedBy) {
+    // deprecated. originally, lower-level was opened after click event
     var $paneContainer = $('#pane-container');
     if (position === 'top') {
       this.moveZoomControls('bottomleft');
@@ -114,6 +165,7 @@ var Grub = {
   },
 
   closePane: function() {
+    // deprecated, see above
     var $paneContainer = $('#pane-container'),
         $pane = $paneContainer.children('#pane');
     if ($paneContainer.hasClass('top')) {
@@ -129,6 +181,7 @@ var Grub = {
   },
 
   createMap: function() {
+    // init from html data
     var locations = this.locationsFromHTML(),
         latlng = [],
         $body = $('body'),
@@ -173,11 +226,10 @@ var Grub = {
           // that.closePane(); // clicking on container responsible for opening pane used to toggle pane
         } else {
           // get cursor location relative to page height and open in proper position
-          var pageY = e.originalEvent.clientY,
-              offset = (that.device() === 'mobile') ? 0 : 1;
+          var pageY = e.originalEvent.clientY;
           location = (pageY > ($(window).height() / 2)) ? 'top' : 'bottom';
           that.openPane(location, markerId);
-          that.swiper.swipeTo(e.layer.feature.properties.index - offset); // open the right place
+          that.swiper.swipeTo(e.layer.feature.properties.index); // open the right place
         }
       });
     }
@@ -217,3 +269,13 @@ var Grub = {
 (function(window, $) {
   $(document).on('ready', function() { Grub.init(); });
 })(window, jQuery);
+
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-43184943-1']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
