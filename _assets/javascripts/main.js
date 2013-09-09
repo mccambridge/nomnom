@@ -37,7 +37,6 @@ var Grub = {
 
   focusOnMarker: function(slide) {
     $locations = $('#locations').find('li');
-    console.log('original:' + slide);
     if (typeof this.marker.properties !== 'undefined') {
       this.markerDefault(); // will fail unless already set from below
     }
@@ -54,16 +53,13 @@ var Grub = {
       return false;
     }
     this.marker = this.map.markerLayer.getGeoJSON().features[slide]; // get marker in geojson
-    console.log('second' + slide + ' vs ' + markers.length);
     this.marker.properties["marker-color"] = '#fe0';
     this.marker.properties["marker-size"] = 'large';
     this.map.markerLayer.clearLayers(); // kill em all!
     this.map.markerLayer.setGeoJSON(this.map.markerLayer.getGeoJSON()); // create new ones
     $('#map').find('.leaflet-marker-pane').find('img').eq(slide).addClass('top'); // z-index: 9999
+    
     this.map.panTo([this.marker.geometry.coordinates[1], this.marker.geometry.coordinates[0]]);// center map on marker
-    if (this.map.getZoom !== 15) {
-      //this.map.setZoom(15); // only reset zoom if not already this close
-    }
   },
 
   panToCityCenter: function() {
