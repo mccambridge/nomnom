@@ -28,6 +28,7 @@ var Grub = {
   },
 
   markerDefault: function() {
+    // set all markers back to default presentation
     this.marker.properties["marker-color"] = '#f63a39';
     this.marker.properties["marker-size"] = 'medium';
     this.map.markerLayer.clearLayers();
@@ -36,6 +37,7 @@ var Grub = {
   },
 
   focusOnMarker: function(slide) {
+    // set marker to current slide
     $locations = $('#locations').find('li');
     if (typeof this.marker.properties !== 'undefined') {
       this.markerDefault(); // will fail unless already set from below
@@ -63,12 +65,14 @@ var Grub = {
   },
 
   panToCityCenter: function() {
+    // self expl. body data contains city center lat/lon
     var $body = $('body');
     var latlng = [$body.data('lat'), $body.data('lon')];
     this.map.panTo(latlng);
   },
 
   initSwiper: function() {
+    // self expl.
     var that = this,
         slides = (this.device() === 'mobile') ? 1 : 3;
 
@@ -76,6 +80,7 @@ var Grub = {
       slidesPerView: slides,
       loop: true,
       onSlideChangeStart: function(swiper) {
+        // ensure defaults on change
         that.map.closePopup();
         that.focusOnMarker(that.swiper.activeIndex);
       }
@@ -97,6 +102,7 @@ var Grub = {
   },
 
   setHeight: function() {
+    // split screen heights
     this.height = $(window).height() / 2 - ($('header').height() / 2);
   },
 
@@ -134,7 +140,7 @@ var Grub = {
   },
 
   createPane: function() {
-    // create lower split-screen on map page
+    // create lower split-screen info pane on map page
     var $paneContainer = $('#pane-container'),
         swiper = '#city-locations',
         $pane = $paneContainer.children('#pane');
@@ -172,12 +178,13 @@ var Grub = {
   },
 
   moveZoomControls: function(pos) {
+    // also deprecated. controls needed to be moved when map had top-half overlay
     this.map.removeControl(this.zoom);
     this.zoom = new L.Control.Zoom({ position: pos }).addTo(this.map);
   },
 
   createMap: function() {
-    // init from html data
+    // init map from html data
     var locations = this.locationsFromHTML(),
         latlng = [],
         $body = $('body'),
@@ -228,11 +235,12 @@ var Grub = {
           that.swiper.swipeTo(e.layer.feature.properties.index); // open the right place
         }
       });
+      return map;
     }
-    return map;
   },
 
   locationsFromHTML: function() {
+    // create locations JSON from html list
     if (!$('#locations').length) return false;
     var locations = [],
         $locations = $('#locations').find('li.location'),
